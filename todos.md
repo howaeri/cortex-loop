@@ -253,6 +253,12 @@ Public-ready exit bar (all required):
   - [x] default projects to structured stop payload mode (starter + example config)
   - [x] message fallback opt-in only, explicitly labeled as degraded path
   - [x] document migration path to native submit/tool call
+  - [ ] follow-up: native stop submission completion (locked policy)
+    - [ ] implement native stop submission adapter path (`cortex_submit_task`) and mark source as authoritative.
+    - [ ] persist stop submission source (`native`, `payload.cortex_stop`, `message_fallback`) for observability.
+    - [ ] enforce strict profiles to reject `message_fallback` regardless of trailer parse success.
+    - [ ] update starter prompts/docs to prefer structured payload fields and remove trailer-first guidance.
+    - [ ] release gate: parity/testing packets must report fallback usage rate; target `message_fallback = 0` in strict runs.
 - [x] Critique: “Too coupled to Claude Code”
   - [x] keep adapter boundary strict in core routing
   - [x] ship minimal `AiderAdapter` and contract tests
