@@ -140,12 +140,23 @@ Acceptance evidence:
 Source of truth:
 - `docs/REPOMAP_PARITY_CRITERIA.md`
 
+Parser policy (new, explicit):
+- Operational mode may keep deterministic heuristic fallback for bootstrap/non-blocking behavior.
+- Parity completion does **not** accept regex/heuristic-only parsing as sufficient.
+- "Aider parity complete" requires tree-sitter-backed structural parsing in parity runs.
+
 Open gates:
 - [ ] Quality gate: 3 production-like repos, top-10 relevance >= 80% each.
 - [ ] Stability gate: median <=2s, p95 <=5s, non-blocking SessionStart under timeout pressure.
 - [ ] Regression gate: fixture breadth + ranking regression coverage maintained.
 - [ ] Testing gate: >=5 comparable baseline-vs-enabled runs with outcome-linked decisions.
 - [ ] Exit packet: gate-by-gate PASS/FAIL in `parity-exit-report.md`.
+- [ ] Parser integrity gate (for parity claim):
+  - [ ] Add a parity profile that requires tree-sitter deps to be present.
+  - [ ] Fail parity runs when tree-sitter deps are missing (do not silently downgrade to heuristic mode).
+  - [ ] Add syntax-stress fixtures (nested exports, multiline constructs, unconventional syntax) across TS/Python/mixed repos.
+  - [ ] Record regex/fallback miss cases vs tree-sitter success cases in evidence packet.
+  - [ ] Require parser backend + dependency state in parity report metadata.
 
 ## 3) Public-Ready Program (Immediate)
 
