@@ -369,9 +369,27 @@ Research anchors (official references used for this plan):
 
 ### P5 — Storage/State Evolution (SQL-first)
 - [ ] Keep core enforcement state in SQLite (`sessions`, `events`, `graveyard`, `invariants`, `challenge_results`).
-- [ ] Define checkpoint shadow schema/design for runtime state evolution.
 - [ ] Add migration/versioning policy for `.cortex/cortex.db`.
 - [ ] Add backup/export command for evidence portability.
+
+### P6 — Future Grafts (Mapped Research)
+Research anchors:
+- `research/EXTRACTION_PATTERNS.md`
+- `research/GRAFT_DISCIPLINE.md`
+
+#### P6-A — SWE-agent ACI Graft (Corrective Interface)
+- [ ] Define Cortex corrective-error taxonomy (recoverable vs hard-gate failures).
+- [ ] Add bounded retry policy by surface (tool-shape/range/format errors only).
+- [ ] Add adapter-normalized corrective error envelope and tests.
+- [ ] Prove no hard-gate dilution (invariants/strict stop failures remain terminal).
+- [ ] Evidence packet: retry success rate, false-retry rate, and net interruption impact.
+
+#### P6-B — LangGraph-Style Checkpoint Graft (Shadow Mode)
+- [ ] Define checkpoint shadow schema in SQLite (write-only, no control-path impact).
+- [ ] Add shadow writer on session/tool/stop events with deterministic ids.
+- [ ] Add parity verifier: shadow projection vs live store consistency checks.
+- [ ] Cutover gate: no behavior cutover until parity packet passes.
+- [ ] Evidence packet: consistency rate, write overhead, replay utility on failed sessions.
 
 ## 5) Longer-Term Goals (Locked)
 
