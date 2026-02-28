@@ -2,43 +2,51 @@
 
 # Cortex
 
-Cortex is a quality and judgment layer for AI coding agents.
+**A quality and judgment layer for AI coding agents.**
 
-I built it to be the pressure layer I wanted while shipping real projects: small, mechanical checks that make bluffing harder than verifying.
+Agents bluff. They generate code, skip verification, repeat the same failed approaches, and call it done. Cortex exists to make that harder. It's a pressure layer that sits inside the loop — making it harder to fake the work than to actually do it.
 
-It does not replace an agent. It sits in the loop and applies pressure where agents usually cut corners: verification, adversarial coverage, repeated-failure memory, and foundation risk checks.
+Cortex doesn't replace your agent. It applies pressure exactly where agents tend to cut corners: verification, adversarial test coverage, repeated-failure memory, and foundation risk checks.
 
-## Proof in 2 minutes
+Small, mechanical checks. No theater. If the code works, it passes. If it doesn't, you'll know why.
 
-These are real testing outcomes from `docs/evidence/RUN_INDEX.md`.
+---
+
+## See It Work (2 minutes)
+
+Real testing outcomes, documented in `docs/evidence/RUN_INDEX.md`:
 
 | Case | Before | After | Evidence |
 | --- | --- | --- | --- |
 | Frontend discovery quality (top-10 relevance) | 20% (`heuristic_fallback`) | 100% (post-fix rerun) | `docs/evidence/RUN_INDEX.md` |
-| Session completion time on a production-style workspace | 11.34m (`heuristic_fallback`) | 5.29m (`ast_pagerank`) | `docs/evidence/RUN_INDEX.md` |
+| Session completion time (production-style workspace) | 11.34m (`heuristic_fallback`) | 5.29m (`ast_pagerank`) | `docs/evidence/RUN_INDEX.md` |
 
-Important limitation: these are testing comparisons, not controlled scientific A/B benchmarks.
+**Honest caveat:** these are testing comparisons, not controlled A/B benchmarks. Evidence over hype — that's the ethos here.
 
-If you want one place to validate claims fast, start here:
+Validate for yourself:
+
 - `START_HERE.md`
 - `docs/evidence/RUN_INDEX.md`
 
-## What Cortex does
+---
 
-- Runs invariant tests the agent did not author.
-- Requires challenge-category coverage (`null_inputs`, `boundary_values`, `error_handling`, `graveyard_regression`).
-- Records failed approaches in a graveyard and warns on repeats.
-- Runs foundation analysis (git churn) before major edits.
-- Generates a repo-map artifact for faster file discovery (`repomap_artifact_v1`).
+## What Cortex Actually Does
 
-## What Cortex is not
+- **Runs invariant tests the agent didn't write.** If the agent authored the tests, who's testing the agent?
+- **Requires adversarial test coverage** across categories: `null_inputs`, `boundary_values`, `error_handling`, `graveyard_regression`.
+- **Remembers what failed.** The graveyard records broken approaches and warns before the agent tries the same thing twice.
+- **Checks the foundation first.** Runs git churn analysis before major edits so you're not renovating a building with a cracked foundation.
+- **Maps the repo.** Generates a `repomap_artifact_v1` so file discovery is fast and grounded, not guesswork.
 
-- Not an agent framework.
-- Not a Claude Code replacement.
-- Not a multi-agent orchestrator.
-- Not prompt theater.
+## What Cortex Is Not
 
-## Current status (alpha)
+Not an agent framework. Not a Claude Code replacement. Not a multi-agent orchestrator. Not prompt theater. Cortex is a quality gate. That's it.
+
+---
+
+## Current Status: Alpha
+
+Cortex is real, working, and in active development. Here's where things stand:
 
 | Area | Status |
 | --- | --- |
@@ -46,11 +54,11 @@ If you want one place to validate claims fast, start here:
 | Invariants + challenge gate + requirement audit | Working |
 | Graveyard + foundation warnings | Working |
 | Repo-map artifact contract | Working |
-| Aider graft status | Alpha (operational, not parity-complete) |
+| Aider graft | Alpha (operational, not parity-complete) |
 
-Parity definition lives in `docs/REPOMAP_PARITY_CRITERIA.md`.
+Parity definition: `docs/REPOMAP_PARITY_CRITERIA.md`
 
-## Compatibility snapshot
+## Compatibility
 
 | Surface | Value |
 | --- | --- |
@@ -58,9 +66,11 @@ Parity definition lives in `docs/REPOMAP_PARITY_CRITERIA.md`.
 | Config schema | `cortex_toml_v1` |
 | Repo-map artifact schema | `repomap_artifact_v1` |
 | DB schema | `PRAGMA user_version = 1` |
-| Supported adapters | `claude` (default), `aider` (alpha/minimal normalization) |
+| Supported adapters | `claude` (default), `aider` (alpha) |
 
-## Install
+---
+
+## Get Started
 
 Requires Python 3.11+.
 
@@ -68,58 +78,63 @@ Requires Python 3.11+.
 pip install -e .
 ```
 
-For optional repo-map ranking deps:
+For repo-map ranking:
 
 ```bash
 pip install -e '.[repomap]'
 ```
 
-## Quickstart
+### Quickstart
 
 ```bash
 cortex init --root /path/to/project
 cortex check --root /path/to/project
 ```
 
-`cortex init` creates:
-- `cortex.toml`
-- `tests/invariants/` (starter invariant test included)
-- `.claude/settings.json`
-- `.claude/CLAUDE.md`
-- `.cortex/cortex.db`
+`cortex init` sets up everything you need:
 
-## Core flow
+- `cortex.toml` — config
+- `tests/invariants/` — starter invariant test included
+- `.claude/settings.json` and `.claude/CLAUDE.md` — agent integration
+- `.cortex/cortex.db` — local state
+
+---
+
+## How It Works
 
 ```text
 Claude hook event
-  -> hooks/*.py
-  -> CortexKernel (core.py)
-  -> subsystems (foundation, graveyard, challenges, invariants, repomap, store)
-  -> JSON response
+  → hooks/*.py
+  → CortexKernel (core.py)
+  → subsystems (foundation, graveyard, challenges, invariants, repomap, store)
+  → JSON response
 ```
 
-On stop, Cortex evaluates challenge coverage, runs invariants, records failed approaches, and returns a structured stop report. In strict mode, invariant failure sets `recommend_revert=true`.
+On stop, Cortex evaluates challenge coverage, runs invariants, records failed approaches, and returns a structured report. In strict mode, invariant failure sets `recommend_revert=true`.
 
-## CLI commands
+## CLI
 
-- `cortex init` bootstrap config, hooks, DB, starter invariants.
-- `cortex check` validate setup (`--json`, `--write-status` supported).
-- `cortex fleet status --roots ...` check many projects in one run.
-- `cortex repomap` emit repo-map artifact.
-- `cortex graveyard` list failed approaches.
-- `cortex show-genome` print parsed `cortex.toml`.
-- `cortex hook <event>` run a hook manually (`--adapter {claude,aider}`).
+| Command | What it does |
+| --- | --- |
+| `cortex init` | Bootstrap config, hooks, DB, starter invariants |
+| `cortex check` | Validate setup (`--json`, `--write-status`) |
+| `cortex fleet status --roots ...` | Check many projects at once |
+| `cortex repomap` | Emit repo-map artifact |
+| `cortex graveyard` | List failed approaches |
+| `cortex show-genome` | Print parsed `cortex.toml` |
+| `cortex hook <event>` | Run a hook manually (`--adapter {claude,aider}`) |
 
-## Repo-map notes
+### Repo-map Notes
 
-- Default output path: `.cortex/artifacts/repomap/latest.json`.
-- `--json` emits pure artifact JSON.
-- `--debug-json` emits artifact + CLI debug envelope.
-- With `[repomap].prefer_ast_graph=true`, method is `ast_pagerank` and backend is `networkx` or `simple`.
+- Default output: `.cortex/artifacts/repomap/latest.json`
+- `--json` for pure artifact JSON, `--debug-json` for artifact + debug envelope
+- With `[repomap].prefer_ast_graph=true`: method is `ast_pagerank`, backend is `networkx` or `simple`
 
-## Security model
+---
 
-Invariant execution defaults to host mode. For untrusted repos, use container mode:
+## Security
+
+Invariant execution defaults to host mode. For untrusted repos, use container isolation:
 
 ```toml
 [invariants]
@@ -128,21 +143,27 @@ container_engine = "docker"
 container_image = "python:3.12-slim"
 ```
 
-Details: `docs/SECURE_DEFAULTS.md`.
+Full details: `docs/SECURE_DEFAULTS.md`
 
-## Useful docs
+---
 
-- Start here: `START_HERE.md`
-- Why this exists: `docs/WHY_CORTEX.md`
-- Repro demo: `docs/DEMO.md`
-- Mission: `MISSION.md`
-- Architecture: `ARCHITECTURE.md`
-- Active backlog: `todos.md`
-- Share status: `docs/SHARE_STATUS.md`
-- Release gate: `docs/RELEASE_CHECKLIST.md`
-- Contributing: `CONTRIBUTING.md`
+## Docs Worth Reading
 
-## Verify quickly
+| Doc | What you'll find |
+| --- | --- |
+| `START_HERE.md` | The fastest path to understanding Cortex |
+| `docs/WHY_CORTEX.md` | The problem Cortex solves and why it matters |
+| `docs/DEMO.md` | Reproducible demo walkthrough |
+| `MISSION.md` | Where this is headed |
+| `ARCHITECTURE.md` | How the pieces fit together |
+| `todos.md` | Active backlog — see what's next |
+| `docs/SHARE_STATUS.md` | Current share status |
+| `docs/RELEASE_CHECKLIST.md` | Release gate criteria |
+| `CONTRIBUTING.md` | How to get involved |
+
+---
+
+## Verify It Yourself
 
 ```bash
 pip install -e '.[dev,repomap]'
@@ -151,14 +172,18 @@ ruff check cortex tests
 cortex check --root .
 ```
 
+---
+
 ## Contributing
 
-Small, test-backed PRs are preferred.
+Cortex welcomes contributors. Small, test-backed PRs are the way in.
 
-Every behavioral claim should include evidence under `docs/evidence/`.
+Every behavioral claim should include evidence under `docs/evidence/`. If you say it works, show that it works. That's the standard.
 
-## Notifications
+Check `todos.md` for the active backlog and `MISSION.md` for the bigger picture. There's a lot of room to make an impact here.
 
-To avoid inbox noise:
-- This repo does not run Dependabot version-update PR automation.
-- Set GitHub watch mode to **Releases only**.
+---
+
+## A Note on Notifications
+
+This repo doesn't run Dependabot version-update PR automation — your inbox stays clean. Set GitHub watch mode to **Releases only** for updates without noise.
