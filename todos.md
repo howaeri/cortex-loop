@@ -278,6 +278,11 @@ Public-ready exit bar (all required):
     - [ ] publish explicit SQLite support envelope (sequential/low-parallel hooks) with measurable lock/error thresholds.
     - [ ] add threaded + multi-process stress tests and capture p95 write latency plus lock-retry/failure rates.
     - [ ] enforce staged escalation by evidence only: tune retry/backoff -> optional single-writer mode -> external DB adapter, with repeated envelope-breach packets required at each step.
+- [ ] Critique: “Foundation git churn can stall or fail in constrained environments”
+  - [ ] follow-up: resilient foundation analysis (locked policy)
+    - [ ] treat missing `git` binary as a graceful advisory state (no exceptions, `git_available=false`, clear warning).
+    - [ ] add bounded timeout for churn subprocess calls and report timeout as degraded advisory output.
+    - [ ] avoid repeated churn scans per hook burst by caching foundation report per session/window.
 
 ### PR-6 — Graft governance (critical as grafting expands)
 - [x] Add `docs/GRAFT_POLICY.md` with required gates for each graft:
