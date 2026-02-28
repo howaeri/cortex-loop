@@ -275,10 +275,9 @@ Public-ready exit bar (all required):
   - [ ] set regression thresholds to prevent drift
 - [ ] Critique: “SQLite lock risk under concurrency”
   - [ ] follow-up: concurrency scaling boundary (locked policy)
-    - [ ] publish explicit SQLite support envelope (intended for sequential/low-parallel hook workloads, not swarms) with measurable lock/error thresholds.
-    - [ ] add stress coverage for both threaded and multi-process writers; record p95 write latency + lock-retry/failure rates.
-    - [ ] keep retry/backoff as baseline and add optional in-process single-writer queue mode only if evidence shows threshold breaches.
-    - [ ] escalation rule: introduce external DB backend path (for example Postgres) only after envelope failure is proven in repeated evidence packets.
+    - [ ] publish explicit SQLite support envelope (sequential/low-parallel hooks) with measurable lock/error thresholds.
+    - [ ] add threaded + multi-process stress tests and capture p95 write latency plus lock-retry/failure rates.
+    - [ ] enforce staged escalation by evidence only: tune retry/backoff -> optional single-writer mode -> external DB adapter, with repeated envelope-breach packets required at each step.
 
 ### PR-6 — Graft governance (critical as grafting expands)
 - [x] Add `docs/GRAFT_POLICY.md` with required gates for each graft:
