@@ -280,9 +280,9 @@ Public-ready exit bar (all required):
     - [ ] enforce staged escalation by evidence only: tune retry/backoff -> optional single-writer mode -> external DB adapter, with repeated envelope-breach packets required at each step.
 - [ ] Critique: “Foundation git churn can stall or fail in constrained environments”
   - [ ] follow-up: resilient foundation analysis (locked policy)
-    - [ ] treat missing `git` binary as a graceful advisory state (no exceptions, `git_available=false`, clear warning).
-    - [ ] add bounded timeout for churn subprocess calls and report timeout as degraded advisory output.
-    - [ ] avoid repeated churn scans per hook burst by caching foundation report per session/window.
+    - [ ] enforce graceful degradation: missing `git` or churn timeout must return advisory output (`git_available=false`, clear warning) with no exceptions.
+    - [ ] enforce one churn scan per session (reuse SessionStart foundation report for PreToolUse warnings; no repeated `git log` calls in a hook burst).
+    - [ ] evidence gate: record SessionStart/PreToolUse latency before vs after and keep advisory quality unchanged.
 
 ### PR-6 — Graft governance (critical as grafting expands)
 - [x] Add `docs/GRAFT_POLICY.md` with required gates for each graft:
