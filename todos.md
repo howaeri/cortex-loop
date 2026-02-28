@@ -261,6 +261,12 @@ Public-ready exit bar (all required):
   - [x] make container mode strongly documented with threat model
   - [x] add explicit warning when running host mode in untrusted repos
   - [x] publish secure defaults guidance by risk profile
+  - [ ] follow-up: secure-by-default decision (still open)
+    - [ ] decide policy: keep host default vs switch init default to container for new projects
+    - [ ] if host remains default, require explicit trusted-repo acknowledgement in `cortex init`
+    - [ ] add `cortex init --profile {trusted,untrusted}` and persist profile in `cortex.toml`
+    - [ ] ensure `cortex check` fails (not warns) when profile is `untrusted` and `execution_mode = "host"`
+    - [ ] add migration notes + before/after onboarding friction metrics in evidence packet
 - [ ] Critique: “Graveyard similarity can miss semantic repeats”
   - [ ] maintain deterministic hybrid scoring tests
   - [ ] benchmark false-negative/false-positive rate on fixture set
