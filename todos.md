@@ -8,6 +8,7 @@
 - Status changes must be updated here in the same PR/commit.
 - Standalone planning docs are archival context only, never active authority.
 - Historical plans are archived at `docs/archive/plans/`.
+- Pack ecosystem work is allowed in parallel, but no public "pack-ready" claim is allowed before Section 2 parity exit gates pass.
 
 ## Engineering Philosophy
 
@@ -158,6 +159,118 @@ Open gates:
   - [ ] Record regex/fallback miss cases vs tree-sitter success cases in evidence packet.
   - [ ] Require parser backend + dependency state in parity report metadata.
 
+## 2A) Pack Ecosystem Program (Parallel Track, Contract-First)
+
+Program objective:
+- Build a stable enforcement-pack contract layer that allows domain experts to ship updated best-practice enforcement without changing Cortex core behavior.
+- Keep core deterministic and small; push fast-changing domain logic into packs.
+- Preserve safety by default-deny permissions, constrained runtime budgets, and trust-tiered publication.
+- Keep PK-0..PK-3 contract/spec-first: no runtime pack loader or registry behavior ships before conformance gates.
+
+Non-negotiable policy:
+- Phase 1 of this program ships specification + conformance + governance only.
+- Runtime pack execution in strict mode is blocked until conformance evidence and trust-tier gates are green.
+- Community tier remains non-default and advisory-only until registry governance is proven.
+- Definition of done for each PK: checklist items complete + corresponding evidence packet exists.
+
+### PK-0 — Contract Spine (Spec Only)
+- [ ] Publish `docs/PACK_ABI_V1.md` with stable request/response schema and required fields.
+- [ ] Define first-class check classes: `deterministic_strict` and `heuristic_advisory`.
+- [ ] Define deterministic status vocabulary: `pass`, `warn`, `fail`, `error`.
+- [ ] Define strict-mode rule: only `deterministic_strict` may hard-fail a stop decision.
+- [ ] Publish canonical examples for one Astro check and one Python check.
+
+### PK-1 — Capability and Sandbox Policy
+- [ ] Publish `docs/PACK_SECURITY_MODEL.md` with capability declaration schema.
+- [ ] Require packs to declare filesystem/network/process permissions explicitly.
+- [ ] Set deny-by-default policy for undeclared capabilities.
+- [ ] Define untrusted-pack execution policy: constrained sandbox profile required; host execution denied.
+- [ ] Define fail-closed behavior for capability violations and sandbox unavailability.
+
+### PK-2 — Provenance and Trust Tiers
+- [ ] Publish `docs/PACK_PROVENANCE.md` schema with required fields: source link(s), last-reviewed date, owner.
+- [ ] Add trust tiers: `official`, `verified`, `community`, `local-only`.
+- [ ] Define tier capabilities and restrictions per tier.
+- [ ] Set default install posture to `official` + `verified` + `local-only` (exclude `community` by default).
+- [ ] Define review requirements for promotion from `community` to `verified`.
+
+### PK-3 — Conformance Suite
+- [ ] Add `tests/packs/test_pack_abi_contract.py`.
+- [ ] Add `tests/packs/test_pack_security_policy.py`.
+- [ ] Add `tests/packs/test_pack_class_semantics.py`.
+- [ ] Add `tests/packs/test_pack_conflict_resolution.py`.
+- [ ] Add `tests/packs/test_pack_runtime_budget_contract.py`.
+- [ ] Add `docs/PACK_CONFORMANCE.md` with pass/fail publish criteria.
+- [ ] Require conformance pass before official/verified install paths are enabled in docs or CLI.
+
+### PK-4 — Runtime Budgets and Conflict Resolution
+- [ ] Define runtime budget contract: per-pack timeout, memory cap, invocation cap.
+- [ ] Define deterministic precedence when packs disagree.
+- [ ] Publish precedence order and tie-break algorithm in `docs/PACK_CONFLICT_POLICY.md`.
+- [ ] Add budget-overrun behavior contract and explicit error codes.
+- [ ] Add deterministic replay examples proving identical outcomes across runs.
+
+### PK-5 — Compatibility and Deprecation
+- [ ] Publish compatibility matrix: pack version x Cortex version x framework version.
+- [ ] Add `docs/PACK_COMPATIBILITY.md` with compatibility policy and examples.
+- [ ] Add semver-based deprecation policy with migration windows in `docs/PACK_DEPRECATION.md`.
+- [ ] Define minimum support window and EOL communication requirements.
+- [ ] Add compatibility regression tests that fail on undeclared breaking changes.
+
+### PK-6 — Golden Replay Corpus
+- [ ] Create `docs/evidence/pack-golden/` with benchmark repositories and expected outcomes.
+- [ ] Add corpus cases for Astro, React/TS, Python backend, and mixed monorepo.
+- [ ] Add deterministic replay command set and expected-result checksums.
+- [ ] Require golden corpus pass for pack ABI or conflict-policy changes.
+- [ ] Add a public run index entry format for pack-related evidence packets.
+
+Public interfaces to lock in TODO scope:
+- [ ] Normative key rule: introducing new required fields requires an ABI version bump.
+- [ ] `PackManifest v1` fields: `pack_id`, `pack_version`, `abi_version`, `framework_targets`, `check_ids`, `capabilities`, `provenance`, `trust_tier`.
+- [ ] `PackCheckResult v1` fields: `pack_id`, `check_id`, `class`, `status`, `message`, `evidence`, `duration_ms`, `budget_flags`, `provenance_ref`.
+- [ ] `PackDecisionEnvelope v1` fields: aggregated results, precedence trace, strict/advisory split, final deterministic decision.
+- [ ] `CapabilityDecl v1` fields: `filesystem`, `network`, `process`, each as explicit allowlists with deny default.
+- [ ] `RuntimeBudget v1` fields: `timeout_ms`, `memory_mb`, `max_invocations`.
+- [ ] `CompatibilityMatrix v1` row keys: `pack_semver`, `cortex_semver_range`, `framework_semver_range`, `status`.
+
+Mandatory acceptance tests:
+- [ ] ABI parser rejects ambiguous or missing required fields.
+- [ ] `deterministic_strict` and `heuristic_advisory` are enforced as distinct semantics.
+- [ ] Strict-mode decisions ignore `heuristic_advisory` fails as hard-fail signals.
+- [ ] Undeclared capability requests fail closed.
+- [ ] Untrusted pack cannot run with broad host permissions.
+- [ ] Budget overflow is deterministic and produces a stable error contract.
+- [ ] Pack disagreement resolves identically across repeated runs.
+- [ ] Compatibility matrix rejects unsupported version tuples.
+- [ ] Deprecation window violations are surfaced before runtime failure.
+- [ ] Golden replay corpus results remain stable across code changes.
+
+Required evidence packets:
+- [ ] `docs/evidence/packs/pk0-abi-contract.md`
+- [ ] `docs/evidence/packs/pk1-security-policy.md`
+- [ ] `docs/evidence/packs/pk2-provenance-trust.md`
+- [ ] `docs/evidence/packs/pk3-conformance-results.md`
+- [ ] `docs/evidence/packs/pk4-budget-conflict-determinism.md`
+- [ ] `docs/evidence/packs/pk5-compat-deprecation.md`
+- [ ] `docs/evidence/packs/pk6-golden-replay.md`
+
+Sequencing and gate logic:
+- [ ] Implement `PK-0` through `PK-3` first.
+- [ ] Do not enable strict runtime pack execution before `PK-3` conformance is green.
+- [ ] Implement `PK-4` and `PK-5` before any "installable external pack" claim.
+- [ ] Implement `PK-6` before any "ecosystem-ready" claim.
+- [ ] Keep existing Section 2 parity gates mandatory and independent.
+- [ ] Allow documentation/spec/conformance progress in parallel with parity work.
+- [ ] Add a release-checklist gate that rejects pack-maturity claims unless required `PK-*` evidence packets are linked.
+
+Assumptions and defaults (locked):
+- [x] Timing: parallel track is allowed now.
+- [x] Scope: first milestone is spec + tests, not full registry runtime.
+- [x] Trust posture: curated + local-only by default.
+- [x] Safety posture: deny-by-default capabilities and fail-closed sandbox policy.
+- [x] Governance posture: semver compatibility and explicit deprecation windows are mandatory.
+- [x] Mission posture: core stays small; pack velocity does not change kernel reliability standards.
+
 ## 3) Public-Ready Program (Immediate)
 
 Program objective:
@@ -172,6 +285,7 @@ Public-ready exit bar (all required):
 - [x] Security disclosure and support pathways are explicit.
 - [x] Release process is reproducible and documented (tag + changelog + checklist).
 - [x] Project-level status/version observability exists across multiple downstream repos.
+- [ ] Pack ecosystem claims must reference passing `PK-*` evidence packets and cannot bypass parity exit criteria (Section 2 and 2A).
 
 ### PR-0 — Baseline and guardrails
 - [x] Capture baseline evidence:
@@ -409,6 +523,7 @@ Objective criteria:
 - [ ] Invariant/challenge/graveyard/foundation loop measurably changes agent behavior.
 - [ ] Testing trend improves (`interrupt_count` down, `escaped_defects` down).
 - [ ] Turnkey setup works without manual surgery.
+- [ ] Two-clock operating model remains intact: kernel contract changes are slow/review-heavy; pack updates are fast/conformance-gated.
 
 Mission guardrails:
 - [ ] Do not turn Cortex into prompt theater.
