@@ -1,0 +1,61 @@
+{
+  "challenge_coverage_missing": false,
+  "challenge_report": {
+    "active_categories": [
+      "null_inputs",
+      "boundary_values",
+      "error_handling",
+      "graveyard_regression"
+    ],
+    "custom_paths": [],
+    "missing_categories": [],
+    "ok": true,
+    "results": [
+      {
+        "category": "null_inputs",
+        "covered": true,
+        "evidence": {}
+      },
+      {
+        "category": "boundary_values",
+        "covered": true,
+        "evidence": {}
+      },
+      {
+        "category": "error_handling",
+        "covered": true,
+        "evidence": {}
+      },
+      {
+        "category": "graveyard_regression",
+        "covered": true,
+        "evidence": {}
+      }
+    ]
+  },
+  "config": {
+    "db_path": "/private/var/folders/0k/883298z93_z36pf7jr4_29g00000gn/T/tmp64dfnxwd/.cortex/cortex.db",
+    "genome_path": "/private/var/folders/0k/883298z93_z36pf7jr4_29g00000gn/T/tmp64dfnxwd/cortex.toml"
+  },
+  "hook": "Stop",
+  "invariant_report": null,
+  "mode": "strict",
+  "ok": true,
+  "proceed": true,
+  "recommend_revert": false,
+  "required_requirement_ids": [
+    "R1"
+  ],
+  "requirement_audit_gap": false,
+  "requirement_audit_missing": false,
+  "requirement_audit_report": {
+    "errors": [],
+    "fail_count": 0,
+    "item_count": 1,
+    "missing_required_ids": [],
+    "ok": true,
+    "pass_count": 1
+  },
+  "session_id": "sample-stop",
+  "warnings": []
+}

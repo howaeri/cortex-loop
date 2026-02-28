@@ -1,0 +1,38 @@
+name: Integration support
+description: Request help wiring Cortex in a downstream project
+labels: [question, integration]
+body:
+  - type: input
+    id: summary
+    attributes:
+      label: Summary
+    validations:
+      required: true
+  - type: input
+    id: project_type
+    attributes:
+      label: Project type
+      description: Example: Python backend, Astro frontend, monorepo
+    validations:
+      required: true
+  - type: textarea
+    id: current_state
+    attributes:
+      label: Current Cortex state
+      description: Include `cortex check --json` output if available
+    validations:
+      required: true
+  - type: textarea
+    id: blocker
+    attributes:
+      label: Blocker
+      description: What failed and where?
+    validations:
+      required: true
+  - type: textarea
+    id: artifacts
+    attributes:
+      label: Relevant artifacts
+      description: Include logs, config snippets, and exact command outputs
+    validations:
+      required: false

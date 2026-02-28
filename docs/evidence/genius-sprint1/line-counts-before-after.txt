@@ -1,0 +1,35 @@
+core.py HEAD(before): 657
+core.py sprint1(after): 588
+core.py sprint1c(core-minify): 553
+core.py sprint1d(core-minify-2): 549
+core.py sprint1e(core-minify-3): 540
+
+on_stop method lines:
+- HEAD(before): 169
+- sprint1c(after): 127
+- sprint1d(after): 123
+- sprint1e(after): 114
+- delta vs HEAD: -55
+
+stop_contract.py:
+- sprint1: 104
+- sprint1b(minified): 76
+- sprint1c+ (with required-id helper): 94
+- sprint1e: 95
+
+stop_policy.py:
+- sprint1: 84
+- sprint1b+: 47
+
+requirements.py:
+- pre-minify helper pass: 270
+- sprint1e: 251
+
+stop-path modules total (core + stop_contract + stop_policy + requirements):
+- pre-minify checkpoint: 962
+- sprint1e: 933
+- delta: -29
+
+validation:
+- pytest: 100 passed
+- ruff: all checks passed

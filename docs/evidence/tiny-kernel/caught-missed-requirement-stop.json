@@ -1,0 +1,69 @@
+{
+  "challenge_coverage_missing": false,
+  "challenge_report": {
+    "active_categories": [
+      "null_inputs",
+      "boundary_values",
+      "error_handling",
+      "graveyard_regression"
+    ],
+    "custom_paths": [],
+    "missing_categories": [],
+    "ok": true,
+    "results": [
+      {
+        "category": "null_inputs",
+        "covered": true,
+        "evidence": {}
+      },
+      {
+        "category": "boundary_values",
+        "covered": true,
+        "evidence": {}
+      },
+      {
+        "category": "error_handling",
+        "covered": true,
+        "evidence": {}
+      },
+      {
+        "category": "graveyard_regression",
+        "covered": true,
+        "evidence": {}
+      }
+    ]
+  },
+  "config": {
+    "db_path": "/private/var/folders/0k/883298z93_z36pf7jr4_29g00000gn/T/tmp4jjwybkg/.cortex/cortex.db",
+    "genome_path": "/private/var/folders/0k/883298z93_z36pf7jr4_29g00000gn/T/tmp4jjwybkg/cortex.toml"
+  },
+  "hook": "Stop",
+  "invariant_report": null,
+  "mode": "strict",
+  "ok": true,
+  "proceed": false,
+  "recommend_revert": true,
+  "required_requirement_ids": [
+    "R1",
+    "R2"
+  ],
+  "requirement_audit_gap": true,
+  "requirement_audit_missing": false,
+  "requirement_audit_report": {
+    "errors": [
+      "requirement_audit missing required ids: R2",
+      "requirement_audit.completeness_verdict=pass does not match computed verdict=fail."
+    ],
+    "fail_count": 0,
+    "item_count": 1,
+    "missing_required_ids": [
+      "R2"
+    ],
+    "ok": false,
+    "pass_count": 1
+  },
+  "session_id": "testing-missed-req",
+  "warnings": [
+    "Requirement audit reported gaps: requirement_audit missing required ids: R2; requirement_audit.completeness_verdict=pass does not match computed verdict=fail."
+  ]
+}

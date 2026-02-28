@@ -1,0 +1,64 @@
+[project]
+name = "cortex-loop"
+type = "python"
+root = "."
+
+[invariants]
+suite_paths = ["tests/invariants"]
+pytest_bin = "pytest"
+run_on_stop = true
+execution_mode = "host"
+container_engine = "docker"
+container_image = "python:3.11-slim"
+container_workdir = "/workspace"
+
+[invariants.graduation]
+enabled = true
+target_dir = "tests/invariants/graduated"
+
+[challenges]
+active_categories = ["null_inputs", "boundary_values", "error_handling", "graveyard_regression"]
+custom_paths = []
+require_coverage = true
+
+[graveyard]
+enabled = true
+max_matches = 5
+similarity_threshold = 0.35
+min_keyword_overlap = 1
+
+[foundation]
+enabled = true
+watch_paths = ["cortex", "tests", "docs"]
+ignored_dirs = [".git", ".venv", "__pycache__", ".pytest_cache", ".ruff_cache"]
+churn_window_commits = 200
+
+[foundation.stability_thresholds]
+warn_churn_count = 8
+high_churn_count = 15
+
+[repomap]
+enabled = false
+run_on_session_start = false
+prefer_ast_graph = true
+watch_paths = ["cortex", "tests", "docs"]
+ignored_dirs = [".git", ".venv", "__pycache__", ".pytest_cache", ".ruff_cache", ".cortex"]
+max_ranked_files = 25
+max_text_bytes = 12000
+artifact_path = ".cortex/artifacts/repomap/latest.json"
+non_blocking = true
+session_start_timeout_ms = 2500
+
+[hooks]
+mode = "advisory"
+fail_on_missing_challenge_coverage = false
+recommend_revert_on_invariant_failure = true
+require_requirement_audit = false
+fail_on_requirement_audit_gap = false
+require_evidence_for_passed_requirement = true
+require_structured_stop_payload = true
+allow_message_stop_fallback = false
+
+[metrics]
+enabled = true
+track = ["human_oversight_minutes", "interrupt_count", "escaped_defects", "completion_minutes", "foundation_quality"]

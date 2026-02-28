@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Security report
+    url: https://github.com/howaeri/cortex-loop/security/advisories/new
+    about: Report security vulnerabilities privately (do not file public issues).
+  - name: Usage and integration discussion
+    url: https://github.com/howaeri/cortex-loop/discussions
+    about: Ask integration questions and discuss usage patterns.

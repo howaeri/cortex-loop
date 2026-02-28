@@ -1,0 +1,39 @@
+{
+  "generated_at": "2026-02-27T11:20:59Z",
+  "ok": true,
+  "provenance": {
+    "ast_enabled": false,
+    "ast_requested": true,
+    "duration_ms": 0,
+    "focus_files": [],
+    "method": "heuristic_fallback",
+    "missing_deps": [
+      "grep-ast",
+      "networkx",
+      "tree-sitter",
+      "tree-sitter-language-pack"
+    ],
+    "scope": [
+      "tests"
+    ],
+    "source_root": "/private/tmp/cortex-clean-project",
+    "timeout_ms": null
+  },
+  "ranking": [
+    {
+      "path": "tests/invariants/example_invariant_test.py",
+      "score": 2.64,
+      "symbols": [
+        "def test_cortex_config_exists"
+      ]
+    }
+  ],
+  "schema_version": "repomap_artifact_v1",
+  "stats": {
+    "byte_count": 85,
+    "files_parsed": 1,
+    "graph_edges": 0,
+    "symbols_found": 1
+  },
+  "text": "tests/invariants/example_invariant_test.py (2.640)\n  - def test_cortex_config_exists\n"
+}

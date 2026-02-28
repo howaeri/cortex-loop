@@ -1,0 +1,104 @@
+# Example Cortex genome for a TypeScript web application.
+# This file is read by cortex/genome.py and can run in advisory or strict mode.
+
+[project]
+name = "acme-web-app"
+type = "typescript-web"
+root = "."
+
+[invariants]
+# External tests the agent did not author during the current task.
+suite_paths = [
+  "tests/invariants/auth_invariants.test.ts",
+  "tests/invariants/api_contracts.test.ts",
+  "tests/invariants/ui_smoke.test.ts",
+]
+pytest_bin = "pytest"
+run_on_stop = true
+# host: run pytest directly on this machine.
+# container: run pytest inside a container boundary.
+execution_mode = "host"
+container_engine = "docker"
+container_image = "python:3.11-slim"
+container_workdir = "/workspace"
+
+[invariants.graduation]
+enabled = true
+# Session-authored adversarial tests can be promoted here after review.
+target_dir = "tests/invariants/graduated"
+
+[challenges]
+# Cortex enforces coverage of each active category; agent implements the tests.
+active_categories = [
+  "null_inputs",
+  "boundary_values",
+  "error_handling",
+  "graveyard_regression",
+]
+custom_paths = [
+  # Optional project-specific challenge templates.
+  ".cortex/challenges/api_idempotency.yaml",
+  ".cortex/challenges/cache_invalidation.yaml",
+]
+require_coverage = true
+
+[graveyard]
+enabled = true
+max_matches = 5
+similarity_threshold = 0.35
+min_keyword_overlap = 1
+
+[foundation]
+enabled = true
+# Paths Cortex watches for churn/stability risk before the agent builds on them.
+watch_paths = ["src", "packages", "scripts"]
+ignored_dirs = ["node_modules", "dist", "build", "coverage", ".next"]
+churn_window_commits = 200
+
+[foundation.stability_thresholds]
+# Number of commits touching a file in the recent churn window.
+warn_churn_count = 8
+high_churn_count = 15
+
+[repomap]
+# Optional Aider-inspired AST+ranking repo-map artifact.
+# Install optional dependencies before enabling:
+#   pip install -e '.[repomap]'
+enabled = false
+run_on_session_start = false
+# Use ast_pagerank when enabled; optional deps only improve ranking backend quality.
+prefer_ast_graph = true
+# Scan scope for repo-map generation (can be narrower than foundation.watch_paths).
+watch_paths = ["src", "packages"]
+ignored_dirs = ["node_modules", "dist", "build", "coverage", ".next", ".git", ".cortex"]
+max_ranked_files = 25
+max_text_bytes = 12000
+artifact_path = ".cortex/artifacts/repomap/latest.json"
+non_blocking = true
+session_start_timeout_ms = 2500
+
+[hooks]
+# advisory: warn only; strict: recommend revert on invariant failures/missing challenge coverage.
+mode = "advisory"
+fail_on_missing_challenge_coverage = false
+recommend_revert_on_invariant_failure = true
+# If true, stop payload must include requirement_audit with per-requirement status + evidence.
+require_requirement_audit = false
+# If true, requirement_audit gaps become a strict-mode revert trigger.
+fail_on_requirement_audit_gap = false
+# Passed requirement entries must include non-empty evidence when true.
+require_evidence_for_passed_requirement = true
+# Structured payloads are the default hardening path for deterministic stop gates.
+require_structured_stop_payload = true
+# Message trailer parsing remains opt-in only and disabled by default.
+allow_message_stop_fallback = false
+
+[metrics]
+enabled = true
+track = [
+  "human_oversight_minutes",
+  "interrupt_count",
+  "escaped_defects",
+  "completion_minutes",
+  "foundation_quality",
+]

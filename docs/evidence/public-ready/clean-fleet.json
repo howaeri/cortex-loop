@@ -1,0 +1,72 @@
+{
+  "cortex_version": "0.1.0",
+  "generated_at": "2026-02-27T16:01:28.480706+00:00",
+  "ok": true,
+  "projects": [
+    {
+      "config": {
+        "exists": true,
+        "parse_error": null,
+        "path": "/private/tmp/cortex-public-ready/cortex.toml"
+      },
+      "config_schema_version": "cortex_toml_v1",
+      "cortex_version": "0.1.0",
+      "db": {
+        "exists": true,
+        "expected_schema_version": 1,
+        "missing_tables": [],
+        "path": "/private/tmp/cortex-public-ready/.cortex/cortex.db",
+        "schema_version": 1,
+        "tables": [
+          "challenge_results",
+          "events",
+          "graveyard",
+          "invariants",
+          "sessions",
+          "sqlite_sequence"
+        ]
+      },
+      "errors": [],
+      "generated_at": "2026-02-27T16:01:28.479174+00:00",
+      "hooks": {
+        "legacy_settings_path": null,
+        "settings_path": "/private/tmp/cortex-public-ready/.claude/settings.json",
+        "valid": true
+      },
+      "invariants": {
+        "missing_paths": [],
+        "paths": [
+          "tests/invariants"
+        ]
+      },
+      "ok": [
+        "Config parsed: /private/tmp/cortex-public-ready/cortex.toml",
+        "Database ready: /private/tmp/cortex-public-ready/.cortex/cortex.db (required tables present)",
+        "Invariant paths present: 1 configured",
+        "Claude hook wiring found in /private/tmp/cortex-public-ready/.claude/settings.json"
+      ],
+      "repomap": {
+        "deps_missing": [],
+        "enabled": false,
+        "prefer_ast_graph": true
+      },
+      "root": "/private/tmp/cortex-public-ready",
+      "status": "ok",
+      "summary": {
+        "errors": 0,
+        "ok": 4,
+        "warnings": 2
+      },
+      "warnings": [
+        "invariants.execution_mode='host' runs tests on the host machine; use only for trusted repositories (switch to execution_mode='container' for stronger isolation)",
+        "Repo-map is disabled in cortex.toml (set [repomap].enabled = true to test it)"
+      ]
+    }
+  ],
+  "summary": {
+    "error_projects": 0,
+    "ok_projects": 1,
+    "projects": 1,
+    "warning_projects": 1
+  }
+}

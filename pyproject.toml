@@ -1,0 +1,52 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cortex-loop"
+version = "0.1.0"
+description = "Quality and judgment layer for AI coding agents via Claude Code hooks"
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [
+  { name = "howaeri" }
+]
+urls = { Homepage = "https://github.com/howaeri/cortex-loop", Repository = "https://github.com/howaeri/cortex-loop", Issues = "https://github.com/howaeri/cortex-loop/issues" }
+keywords = ["ai", "coding-agent", "quality", "hooks", "claude-code"]
+classifiers = [
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Developers",
+]
+dependencies = []
+
+[project.optional-dependencies]
+repomap = [
+  "grep-ast==0.9.0",
+  "numpy>=2.0",
+  "networkx==3.4.2",
+  "tree-sitter-language-pack==0.13.0",
+  "tree-sitter==0.25.2",
+]
+dev = [
+  "pytest>=8.0",
+  "ruff>=0.3",
+]
+
+[project.scripts]
+cortex = "cortex.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["cortex*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"

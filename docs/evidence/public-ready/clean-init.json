@@ -1,0 +1,15 @@
+{
+  "created": [
+    "/private/tmp/cortex-public-ready/tests/invariants",
+    "/private/tmp/cortex-public-ready/.cortex",
+    "/private/tmp/cortex-public-ready/.claude",
+    "/private/tmp/cortex-public-ready/cortex.toml",
+    "/private/tmp/cortex-public-ready/.claude/settings.json",
+    "/private/tmp/cortex-public-ready/.claude/CLAUDE.md",
+    "/private/tmp/cortex-public-ready/tests/invariants/example_invariant_test.py",
+    "/private/tmp/cortex-public-ready/.cortex/cortex.db"
+  ],
+  "ok": true,
+  "overwritten": [],
+  "root": "/private/tmp/cortex-public-ready"
+}

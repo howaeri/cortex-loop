@@ -1,0 +1,43 @@
+name: Feature request
+description: Propose a narrowly-scoped capability improvement
+labels: [enhancement]
+body:
+  - type: input
+    id: summary
+    attributes:
+      label: Summary
+      description: One-line request
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem statement
+      description: What reliability or adoption issue does this solve?
+    validations:
+      required: true
+  - type: textarea
+    id: mission_fit
+    attributes:
+      label: Mission fit check
+      description: Explain PHI_MINIFY, PHI_MISSION, and PHI_NICHE fit
+      placeholder: |
+        PHI_MINIFY: ...
+        PHI_MISSION: ...
+        PHI_NICHE: ...
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed implementation
+      description: Keep scope narrow and explicit
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence plan
+      description: Which tests/benchmarks/evidence artifacts prove value?
+    validations:
+      required: true

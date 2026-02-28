@@ -1,0 +1,9 @@
+{
+  "cwd": "/workspace/anonymized-project",
+  "hook_event_name": "Stop",
+  "last_assistant_message": "Implemented requested changes and verified invariants.\n\nCORTEX_STOP_JSON: {\"challenge_coverage\":{\"null_inputs\":true,\"boundary_values\":true,\"error_handling\":true,\"graveyard_regression\":true}}",
+  "permission_mode": "bypassPermissions",
+  "session_id": "anonymized-session-id",
+  "stop_hook_active": false,
+  "transcript_path": "/workspace/transcripts/anonymized-session.jsonl"
+}

@@ -1,0 +1,11 @@
+Cortex Check: /private/tmp/cortex-clean-project
+OK:
+  - Config parsed: /private/tmp/cortex-clean-project/cortex.toml
+  - Database ready: /private/tmp/cortex-clean-project/.cortex/cortex.db (required tables present)
+  - Invariant paths present: 1 configured
+  - Claude hook wiring found in /private/tmp/cortex-clean-project/.claude/settings.json
+Needs Attention:
+  - Repo-map is disabled in cortex.toml (set [repomap].enabled = true to test it)
+Missing / Errors:
+  (none)
+Summary: 4 ok, 1 warnings, 0 errors

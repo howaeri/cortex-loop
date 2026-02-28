@@ -1,0 +1,9 @@
+# Default owner
+* @howaeri
+
+# Load-bearing subsystems
+/cortex/ @howaeri
+/tests/ @howaeri
+/docs/ @howaeri
+/pyproject.toml @howaeri
+/README.md @howaeri

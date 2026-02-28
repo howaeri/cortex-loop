@@ -1,0 +1,5 @@
+     595 cortex/core.py
+     153 cortex/genome.py
+     716 cortex/cli.py
+     601 tests/test_core.py
+    2065 total
