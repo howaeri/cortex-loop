@@ -254,11 +254,9 @@ Public-ready exit bar (all required):
   - [x] message fallback opt-in only, explicitly labeled as degraded path
   - [x] document migration path to native submit/tool call
   - [ ] follow-up: native stop submission completion (locked policy)
-    - [ ] implement native stop submission adapter path (`cortex_submit_task`) and mark source as authoritative.
-    - [ ] persist stop submission source (`native`, `payload.cortex_stop`, `message_fallback`) for observability.
-    - [ ] enforce strict profiles to reject `message_fallback` regardless of trailer parse success.
-    - [ ] update starter prompts/docs to prefer structured payload fields and remove trailer-first guidance.
-    - [ ] release gate: parity/testing packets must report fallback usage rate; target `message_fallback = 0` in strict runs.
+    - [ ] add authoritative native submission path (`cortex_submit_task`) and persist stop source (`native`, `payload.cortex_stop`, `message_fallback`).
+    - [ ] enforce policy: strict mode rejects `message_fallback`; advisory mode may allow it explicitly.
+    - [ ] update starter docs/prompts + release evidence to track fallback rate (target `message_fallback = 0` in strict runs).
 - [x] Critique: “Too coupled to Claude Code”
   - [x] keep adapter boundary strict in core routing
   - [x] ship minimal `AiderAdapter` and contract tests
@@ -268,12 +266,9 @@ Public-ready exit bar (all required):
   - [x] add explicit warning when running host mode in untrusted repos
   - [x] publish secure defaults guidance by risk profile
   - [ ] follow-up: secure-by-default execution (locked policy)
-    - [ ] new projects default to container mode (`execution_mode = "container"`).
-    - [ ] add `cortex init --profile {untrusted,trusted}` (default `untrusted`); host mode requires explicit trusted profile/flag.
-    - [ ] add runtime gate: if profile is `untrusted` and execution mode is `host`, block invariant run with deterministic error.
-    - [ ] add check gate: same mismatch is an error in `cortex check` (not a warning).
-    - [ ] migration rule: existing projects remain operational but get explicit upgrade warning + one-command fix guidance.
-    - [ ] evidence packet: trusted-host pass, untrusted-host block, container pass, and onboarding/runtime impact metrics.
+    - [ ] default new projects to container mode and add `cortex init --profile {untrusted,trusted}` (default `untrusted`).
+    - [ ] enforce `untrusted + host` as an error in both runtime and `cortex check`.
+    - [ ] keep existing projects operational with explicit migration warning + evidence packet (trusted-host pass, untrusted-host block, container pass, impact metrics).
 - [ ] Critique: “Graveyard similarity can miss semantic repeats”
   - [ ] maintain deterministic hybrid scoring tests
   - [ ] benchmark false-negative/false-positive rate on fixture set
