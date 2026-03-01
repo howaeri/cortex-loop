@@ -4,15 +4,13 @@
 
 **A quality and judgment layer for AI coding agents.**
 
-Agents bluff. They generate code, skip verification, repeat the same failed approaches, and call it done. Cortex exists to make that harder. It's a pressure layer that sits inside the loop — making it harder to fake the work than to actually do it.
+Agents lie and follow the path of least resistance. They generate code, skip verification, repeat the same failed approaches, and call it done. Cortex is a pressure layer that sits inside the loop — making it harder to fake the work than to actually do it.
 
 Cortex doesn't replace your agent. It applies pressure exactly where agents tend to cut corners: verification, adversarial test coverage, repeated-failure memory, and foundation risk checks.
 
-Small, mechanical checks. No theater. If the code works, it passes. If it doesn't, you'll know why.
-
 ---
 
-## See It Work (2 minutes)
+## See It Work
 
 Real testing outcomes, documented in `docs/evidence/RUN_INDEX.md`:
 
@@ -21,9 +19,7 @@ Real testing outcomes, documented in `docs/evidence/RUN_INDEX.md`:
 | Frontend discovery quality (top-10 relevance) | 20% (`heuristic_fallback`) | 100% (post-fix rerun) | `docs/evidence/RUN_INDEX.md` |
 | Session completion time (production-style workspace) | 11.34m (`heuristic_fallback`) | 5.29m (`ast_pagerank`) | `docs/evidence/RUN_INDEX.md` |
 
-**Honest caveat:** these are testing comparisons, not controlled A/B benchmarks. Evidence over hype — that's the ethos here.
-
-Validate for yourself:
+These are testing comparisons from real sessions, not controlled A/B benchmarks. The evidence directory has the full run logs if you want to look closer.
 
 - `START_HERE.md`
 - `docs/evidence/RUN_INDEX.md`
@@ -38,15 +34,11 @@ Validate for yourself:
 - **Checks the foundation first.** Runs git churn analysis before major edits so you're not renovating a building with a cracked foundation.
 - **Maps the repo.** Generates a `repomap_artifact_v1` so file discovery is fast and grounded, not guesswork.
 
-## What Cortex Is Not
-
-Not an agent framework. Not a Claude Code replacement. Not a multi-agent orchestrator. Not prompt theater. Cortex is a quality gate. That's it.
-
 ---
 
 ## Current Status: Alpha
 
-Cortex is real, working, and in active development. Here's where things stand:
+Cortex is real, working, and in active development.
 
 | Area | Status |
 | --- | --- |
@@ -147,7 +139,7 @@ Full details: `docs/SECURE_DEFAULTS.md`
 
 ---
 
-## Docs Worth Reading
+## Docs
 
 | Doc | What you'll find |
 | --- | --- |
@@ -180,7 +172,7 @@ Cortex welcomes contributors. Small, test-backed PRs are the way in.
 
 Every behavioral claim should include evidence under `docs/evidence/`. If you say it works, show that it works. That's the standard.
 
-Check `todos.md` for the active backlog and `MISSION.md` for the bigger picture. There's a lot of room to make an impact here.
+Check `todos.md` for the active backlog and `MISSION.md` for the bigger picture.
 
 ---
 
